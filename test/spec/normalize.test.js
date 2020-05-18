@@ -7,7 +7,7 @@ var statsSpys = require('fs-stats-spys');
 
 var normalizeStats = require('../..');
 
-var DIR = path.resolve(path.join(__dirname, '..', 'data'));
+var TEST_DIR = path.resolve(path.join(__dirname, '..', '..', '.tmp', 'test'));
 var STRUCTURE = {
   file1: 'a',
   file2: 'b',
@@ -22,22 +22,22 @@ var STRUCTURE = {
 
 describe('normalize', function () {
   after(function (done) {
-    rimraf(DIR, done);
+    rimraf(TEST_DIR, done);
   });
   beforeEach(function (done) {
-    rimraf(DIR, function () {
-      generate(DIR, STRUCTURE, done);
+    rimraf(TEST_DIR, function () {
+      generate(TEST_DIR, STRUCTURE, done);
     });
   });
 
   it('should load stats', function (done) {
     var spys = statsSpys();
 
-    fs.readdir(DIR, function (err, names) {
+    fs.readdir(TEST_DIR, function (err, names) {
       assert.ok(!err);
 
       for (var index in names) {
-        var smallStats = normalizeStats(fs.statSync(path.join(DIR, names[index])));
+        var smallStats = normalizeStats(fs.statSync(path.join(TEST_DIR, names[index])));
 
         assert.ok(typeof smallStats.dev !== 'undefined');
         assert.ok(typeof smallStats.mode !== 'undefined');
@@ -72,11 +72,11 @@ describe('normalize', function () {
     it('should initialize from with bigInt option', function (done) {
       var spys = statsSpys();
 
-      fs.readdir(DIR, function (err, names) {
+      fs.readdir(TEST_DIR, function (err, names) {
         assert.ok(!err);
 
         for (var index in names) {
-          var bigStats = fs.lstatSync(path.join(DIR, names[index]), { bigint: true });
+          var bigStats = fs.lstatSync(path.join(TEST_DIR, names[index]), { bigint: true });
 
           bigStats = normalizeStats(bigStats);
           assert.ok(typeof bigStats.dev !== 'undefined');

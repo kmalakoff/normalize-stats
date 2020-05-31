@@ -19,19 +19,13 @@
   "author": "Kevin Malakoff <kmalakoff@gmail.com> (https://github.com/kmalakoff)",
   "main": "index.js",
   "scripts": {
-    "format": "eslint . --fix",
+    "format": "prettier --write .",
     "lint": "eslint .",
     "test": "mocha-compat test/spec/**/*.test.js"
   },
-  "dependencies": {
-    "big.js": "^5.2.2",
-    "jsbi-compat": "^0.2.0",
-    "legacy-extends": "^0.4.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "async-each": "^1.0.3",
     "babel-eslint": "^10.1.0",
-    "end-with": "^1.0.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
@@ -41,8 +35,6 @@
     "eslint-plugin-standard": "^4.0.1",
     "fs-generate": "^1.8.1",
     "fs-stats-spys": "^1.0.1",
-    "is-safe-integer": "^2.0.0",
-    "lodash.isdate": "^4.0.1",
     "mocha-compat": "^3.5.5",
     "prettier": "^2.0.5",
     "rimraf": "^2.7.1"

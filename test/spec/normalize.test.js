@@ -20,6 +20,8 @@ var STRUCTURE = {
   'dir3/filelink2': '~dir2/file1',
 };
 
+var isWindows = process.platform === 'win32';
+
 describe('normalize', function () {
   after(function (done) {
     rimraf(TEST_DIR, done);
@@ -45,10 +47,10 @@ describe('normalize', function () {
         assert.ok(typeof smallStats.uid !== 'undefined');
         assert.ok(typeof smallStats.gid !== 'undefined');
         assert.ok(typeof smallStats.rdev !== 'undefined');
-        assert.ok(typeof smallStats.blksize !== 'undefined');
+        isWindows || assert.ok(typeof smallStats.blksize !== 'undefined');
         assert.ok(typeof smallStats.ino !== 'undefined');
         assert.ok(typeof smallStats.size !== 'undefined');
-        assert.ok(typeof smallStats.blocks !== 'undefined');
+        isWindows || assert.ok(typeof smallStats.blocks !== 'undefined');
         assert.ok(typeof smallStats.atime !== 'undefined');
         assert.ok(typeof smallStats.atimeMs !== 'undefined');
         assert.ok(typeof smallStats.mtime !== 'undefined');
@@ -85,10 +87,10 @@ describe('normalize', function () {
           assert.ok(typeof bigStats.uid !== 'undefined');
           assert.ok(typeof bigStats.gid !== 'undefined');
           assert.ok(typeof bigStats.rdev !== 'undefined');
-          assert.ok(typeof bigStats.blksize !== 'undefined');
+          isWindows || assert.ok(typeof bigStats.blksize !== 'undefined');
           assert.ok(typeof bigStats.ino !== 'undefined');
           assert.ok(typeof bigStats.size !== 'undefined');
-          assert.ok(typeof bigStats.blocks !== 'undefined');
+          isWindows || assert.ok(typeof bigStats.blocks !== 'undefined');
           assert.ok(typeof bigStats.atime !== 'undefined');
           assert.ok(typeof bigStats.atimeMs !== 'undefined');
           assert.ok(typeof bigStats.atimeNs !== 'undefined');

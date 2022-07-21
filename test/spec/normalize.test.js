@@ -7,7 +7,7 @@ var statsSpys = require('fs-stats-spys');
 
 var normalizeStats = require('../..');
 
-var DIR = path.resolve(path.join(__dirname, '..', 'data'));
+var TEST_DIR = path.resolve(path.join(__dirname, '..', '..', '.tmp', 'test'));
 var STRUCTURE = {
   file1: 'a',
   file2: 'b',
@@ -20,24 +20,26 @@ var STRUCTURE = {
   'dir3/filelink2': '~dir2/file1',
 };
 
+var isWindows = process.platform === 'win32';
+
 describe('normalize', function () {
   after(function (done) {
-    rimraf(DIR, done);
+    rimraf(TEST_DIR, done);
   });
   beforeEach(function (done) {
-    rimraf(DIR, function () {
-      generate(DIR, STRUCTURE, done);
+    rimraf(TEST_DIR, function () {
+      generate(TEST_DIR, STRUCTURE, done);
     });
   });
 
   it('should load stats', function (done) {
     var spys = statsSpys();
 
-    fs.readdir(DIR, function (err, names) {
+    fs.readdir(TEST_DIR, function (err, names) {
       assert.ok(!err);
 
       for (var index in names) {
-        var smallStats = normalizeStats(fs.statSync(path.join(DIR, names[index])));
+        var smallStats = normalizeStats(fs.statSync(path.join(TEST_DIR, names[index])));
 
         assert.ok(typeof smallStats.dev !== 'undefined');
         assert.ok(typeof smallStats.mode !== 'undefined');
@@ -45,10 +47,10 @@ describe('normalize', function () {
         assert.ok(typeof smallStats.uid !== 'undefined');
         assert.ok(typeof smallStats.gid !== 'undefined');
         assert.ok(typeof smallStats.rdev !== 'undefined');
-        assert.ok(typeof smallStats.blksize !== 'undefined');
+        isWindows || assert.ok(typeof smallStats.blksize !== 'undefined');
         assert.ok(typeof smallStats.ino !== 'undefined');
         assert.ok(typeof smallStats.size !== 'undefined');
-        assert.ok(typeof smallStats.blocks !== 'undefined');
+        isWindows || assert.ok(typeof smallStats.blocks !== 'undefined');
         assert.ok(typeof smallStats.atime !== 'undefined');
         assert.ok(typeof smallStats.atimeMs !== 'undefined');
         assert.ok(typeof smallStats.mtime !== 'undefined');
@@ -72,11 +74,11 @@ describe('normalize', function () {
     it('should initialize from with bigInt option', function (done) {
       var spys = statsSpys();
 
-      fs.readdir(DIR, function (err, names) {
+      fs.readdir(TEST_DIR, function (err, names) {
         assert.ok(!err);
 
         for (var index in names) {
-          var bigStats = fs.lstatSync(path.join(DIR, names[index]), { bigint: true });
+          var bigStats = fs.lstatSync(path.join(TEST_DIR, names[index]), { bigint: true });
 
           bigStats = normalizeStats(bigStats);
           assert.ok(typeof bigStats.dev !== 'undefined');
@@ -85,10 +87,10 @@ describe('normalize', function () {
           assert.ok(typeof bigStats.uid !== 'undefined');
           assert.ok(typeof bigStats.gid !== 'undefined');
           assert.ok(typeof bigStats.rdev !== 'undefined');
-          assert.ok(typeof bigStats.blksize !== 'undefined');
+          isWindows || assert.ok(typeof bigStats.blksize !== 'undefined');
           assert.ok(typeof bigStats.ino !== 'undefined');
           assert.ok(typeof bigStats.size !== 'undefined');
-          assert.ok(typeof bigStats.blocks !== 'undefined');
+          isWindows || assert.ok(typeof bigStats.blocks !== 'undefined');
           assert.ok(typeof bigStats.atime !== 'undefined');
           assert.ok(typeof bigStats.atimeMs !== 'undefined');
           assert.ok(typeof bigStats.atimeNs !== 'undefined');

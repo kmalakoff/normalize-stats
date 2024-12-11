@@ -1,7 +1,6 @@
-// eslint-disable-next-line no-undef
-var kNsPerMsBigInt = typeof BigInt === 'undefined' ? Math.pow(10, 6) : BigInt(Math.pow(10, 6));
+const kNsPerMsBigInt = typeof BigInt === 'undefined' ? 10 ** 6 : BigInt(10 ** 6);
 
-module.exports = function normalizeStats(stats) {
+export default function normalizeStats(stats) {
   if (typeof stats.dev !== 'bigint') {
     if (!stats.atimeMs) {
       stats.atimeMs = stats.atime.valueOf() * 1000;
@@ -18,4 +17,4 @@ module.exports = function normalizeStats(stats) {
     }
   }
   return stats;
-};
+}

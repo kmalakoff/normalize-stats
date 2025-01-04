@@ -1,0 +1,1 @@
+ignores: ["normalize-stats", "@types/*", "@biomejs/*"]

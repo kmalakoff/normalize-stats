@@ -13,7 +13,7 @@
   "homepage": "https://github.com/kmalakoff/normalize-stats",
   "repository": {
     "type": "git",
-    "url": "git@github.com:kmalakoff/normalize-stats.git"
+    "url": "git+ssh://git@github.com/kmalakoff/normalize-stats.git"
   },
   "license": "MIT",
   "author": "Kevin Malakoff <kmalakoff@gmail.com> (https://github.com/kmalakoff)",

@@ -1,1 +1,1 @@
-ignores: ["depcheck"]
+ignores: ["normalize-stats", "@types/*", "@biomejs/*"]

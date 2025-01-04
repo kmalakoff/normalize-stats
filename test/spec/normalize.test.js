@@ -1,14 +1,14 @@
-var assert = require('assert');
-var generate = require('fs-generate');
-var rimraf = require('rimraf');
-var path = require('path');
-var fs = require('fs');
-var statsSpys = require('fs-stats-spys');
+const assert = require('assert');
+const generate = require('fs-generate');
+const rimraf2 = require('rimraf2');
+const path = require('path');
+const fs = require('fs');
+const statsSpys = require('fs-stats-spys');
 
-var normalizeStats = require('../..');
+const normalizeStats = require('normalize-stats');
 
-var TEST_DIR = path.resolve(path.join(__dirname, '..', '..', '.tmp', 'test'));
-var STRUCTURE = {
+const TEST_DIR = path.join(path.join(__dirname, '..', '..', '.tmp', 'test'));
+const STRUCTURE = {
   file1: 'a',
   file2: 'b',
   dir1: null,
@@ -20,26 +20,26 @@ var STRUCTURE = {
   'dir3/filelink2': '~dir2/file1',
 };
 
-var isWindows = process.platform === 'win32';
+const isWindows = process.platform === 'win32' || /^(msys|cygwin)$/.test(process.env.OSTYPE);
 
-describe('normalize', function () {
-  after(function (done) {
-    rimraf(TEST_DIR, done);
+describe('normalize', () => {
+  after((done) => {
+    rimraf2(TEST_DIR, { disableGlob: true }, done);
   });
-  beforeEach(function (done) {
-    rimraf(TEST_DIR, function () {
+  beforeEach((done) => {
+    rimraf2(TEST_DIR, { disableGlob: true }, () => {
       generate(TEST_DIR, STRUCTURE, done);
     });
   });
 
-  it('should load stats', function (done) {
-    var spys = statsSpys();
+  it('should load stats', (done) => {
+    const spys = statsSpys();
 
-    fs.readdir(TEST_DIR, function (err, names) {
-      assert.ok(!err);
+    fs.readdir(TEST_DIR, (err, names) => {
+      assert.ok(!err, err ? err.message : '');
 
-      for (var index in names) {
-        var smallStats = normalizeStats(fs.statSync(path.join(TEST_DIR, names[index])));
+      for (const index in names) {
+        const smallStats = normalizeStats(fs.statSync(path.join(TEST_DIR, names[index])));
 
         assert.ok(typeof smallStats.dev !== 'undefined');
         assert.ok(typeof smallStats.mode !== 'undefined');
@@ -71,14 +71,14 @@ describe('normalize', function () {
   });
 
   typeof BigInt === 'undefined' ||
-    it('should initialize from with bigInt option', function (done) {
-      var spys = statsSpys();
+    it('should initialize from with bigInt option', (done) => {
+      const spys = statsSpys();
 
-      fs.readdir(TEST_DIR, function (err, names) {
-        assert.ok(!err);
+      fs.readdir(TEST_DIR, (err, names) => {
+        assert.ok(!err, err ? err.message : '');
 
-        for (var index in names) {
-          var bigStats = fs.lstatSync(path.join(TEST_DIR, names[index]), { bigint: true });
+        for (const index in names) {
+          let bigStats = fs.lstatSync(path.join(TEST_DIR, names[index]), { bigint: true });
 
           bigStats = normalizeStats(bigStats);
           assert.ok(typeof bigStats.dev !== 'undefined');

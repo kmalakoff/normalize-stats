@@ -32,9 +32,9 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^22.10.5",
-    "fs-generate": "^1.9.8",
-    "fs-stats-spys": "^1.1.8",
+    "@types/node": "^22.10.6",
+    "fs-generate": "^1.9.9",
+    "fs-stats-spys": "^1.1.9",
     "rimraf2": "^2.8.2"
   },
   "engines": {

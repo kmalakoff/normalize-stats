@@ -30,12 +30,11 @@
     "version": "tsds version"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "^22.10.6",
-    "fs-generate": "^1.9.9",
-    "fs-stats-spys": "^1.1.9",
-    "rimraf2": "^2.8.2"
+    "@types/mocha": "*",
+    "@types/node": "*",
+    "fs-generate": "*",
+    "fs-stats-spys": "*",
+    "rimraf2": "*"
   },
   "engines": {
     "node": ">=0.8"

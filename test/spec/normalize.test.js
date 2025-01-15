@@ -36,7 +36,7 @@ describe('normalize', () => {
     const spys = statsSpys();
 
     fs.readdir(TEST_DIR, (err, names) => {
-      if (err) return done(err);
+      if (err) return done(err.message);
 
       for (const index in names) {
         const smallStats = normalizeStats(fs.statSync(path.join(TEST_DIR, names[index])));
@@ -75,7 +75,7 @@ describe('normalize', () => {
       const spys = statsSpys();
 
       fs.readdir(TEST_DIR, (err, names) => {
-        if (err) return done(err);
+        if (err) return done(err.message);
 
         for (const index in names) {
           let bigStats = fs.lstatSync(path.join(TEST_DIR, names[index]), { bigint: true });

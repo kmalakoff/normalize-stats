@@ -1,12 +1,15 @@
-const assert = require('assert');
-const generate = require('fs-generate');
-const rimraf2 = require('rimraf2');
-const path = require('path');
-const fs = require('fs');
-const statsSpys = require('fs-stats-spys');
+import assert from 'assert';
+import fs from 'fs';
+import path from 'path';
+import url from 'url';
+import generate from 'fs-generate';
+import statsSpys from 'fs-stats-spys';
+import rimraf2 from 'rimraf2';
 
-const normalizeStats = require('normalize-stats');
+// @ts-ignore
+import normalizeStats from 'normalize-stats';
 
+const __dirname = path.dirname(typeof __filename !== 'undefined' ? __filename : url.fileURLToPath(import.meta.url));
 const TEST_DIR = path.join(path.join(__dirname, '..', '..', '.tmp', 'test'));
 const STRUCTURE = {
   file1: 'a',

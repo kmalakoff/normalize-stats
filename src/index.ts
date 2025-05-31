@@ -1,12 +1,15 @@
+import type { BigIntStats, Stats } from 'fs';
+
 const kNsPerMsBigInt = typeof BigInt === 'undefined' ? 10 ** 6 : BigInt(10 ** 6);
 
-export default function normalizeStats(stats) {
+export default function normalizeStats(stats: Stats | BigIntStats): Stats | BigIntStats {
   if (typeof stats.dev === 'bigint') {
-    if (!stats.atimeNs) {
-      stats.atimeNs = stats.atimeMs * (kNsPerMsBigInt as bigint);
-      stats.mtimeNs = stats.mtimeMs * (kNsPerMsBigInt as bigint);
-      stats.ctimeNs = stats.ctimeMs * (kNsPerMsBigInt as bigint);
-      stats.birthtimeNs = stats.birthtimeMs * (kNsPerMsBigInt as bigint);
+    const bigStats = stats as BigIntStats;
+    if (!bigStats.atimeNs) {
+      bigStats.atimeNs = bigStats.atimeMs * (kNsPerMsBigInt as bigint);
+      bigStats.mtimeNs = bigStats.mtimeMs * (kNsPerMsBigInt as bigint);
+      bigStats.ctimeNs = bigStats.ctimeMs * (kNsPerMsBigInt as bigint);
+      bigStats.birthtimeNs = bigStats.birthtimeMs * (kNsPerMsBigInt as bigint);
     }
   } else {
     if (!stats.atimeMs) {

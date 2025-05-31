@@ -73,7 +73,7 @@ describe('normalize', () => {
     });
   });
 
-  typeof BigInt === 'undefined' ||
+  ['undefined', 'function'].indexOf(typeof BigInt) >= 0 ||
     it('should initialize from with bigInt option', (done) => {
       const spys = statsSpys();
 

@@ -1,13 +1,12 @@
 import assert from 'assert';
 import fs from 'fs';
-import path from 'path';
-import url from 'url';
 import generate from 'fs-generate';
 import statsSpys from 'fs-stats-spys';
-import rimraf2 from 'rimraf2';
-
 // @ts-ignore
 import normalizeStats from 'normalize-stats';
+import path from 'path';
+import rimraf2 from 'rimraf2';
+import url from 'url';
 
 const __dirname = path.dirname(typeof __filename !== 'undefined' ? __filename : url.fileURLToPath(import.meta.url));
 const TEST_DIR = path.join(path.join(__dirname, '..', '..', '.tmp', 'test'));
@@ -31,7 +30,9 @@ describe('normalize', () => {
   });
   beforeEach((done) => {
     rimraf2(TEST_DIR, { disableGlob: true }, () => {
-      generate(TEST_DIR, STRUCTURE, done);
+      generate(TEST_DIR, STRUCTURE, (err) => {
+        done(err);
+      });
     });
   });
 
@@ -39,7 +40,10 @@ describe('normalize', () => {
     const spys = statsSpys();
 
     fs.readdir(TEST_DIR, (err, names) => {
-      if (err) return done(err.message);
+      if (err) {
+        done(err.message);
+        return;
+      }
 
       for (const index in names) {
         const smallStats = normalizeStats(fs.statSync(path.join(TEST_DIR, names[index])));
@@ -78,7 +82,10 @@ describe('normalize', () => {
       const spys = statsSpys();
 
       fs.readdir(TEST_DIR, (err, names) => {
-        if (err) return done(err.message);
+        if (err) {
+          done(err.message);
+          return;
+        }
 
         for (const index in names) {
           let bigStats = fs.lstatSync(path.join(TEST_DIR, names[index]), { bigint: true });

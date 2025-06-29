@@ -1,5 +1,5 @@
 import assert from 'assert';
-import fs from 'fs';
+import fs, { type BigIntStats } from 'fs';
 import generate from 'fs-generate';
 import statsSpys from 'fs-stats-spys';
 // @ts-ignore
@@ -88,9 +88,9 @@ describe('normalize', () => {
         }
 
         for (const index in names) {
-          let bigStats = fs.lstatSync(path.join(TEST_DIR, names[index]), { bigint: true });
+          const bigStats_ = fs.lstatSync(path.join(TEST_DIR, names[index]), { bigint: true });
 
-          bigStats = normalizeStats(bigStats);
+          const bigStats = normalizeStats(bigStats_) as BigIntStats;
           assert.ok(typeof bigStats.dev !== 'undefined');
           assert.ok(typeof bigStats.mode !== 'undefined');
           assert.ok(typeof bigStats.nlink !== 'undefined');

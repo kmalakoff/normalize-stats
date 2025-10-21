@@ -2,7 +2,6 @@ import assert from 'assert';
 import fs, { type BigIntStats } from 'fs';
 import generate from 'fs-generate';
 import statsSpys from 'fs-stats-spys';
-// @ts-ignore
 import normalizeStats from 'normalize-stats';
 import path from 'path';
 import rimraf2 from 'rimraf2';

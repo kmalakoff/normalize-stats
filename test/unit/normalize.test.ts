@@ -1,10 +1,10 @@
 import assert from 'assert';
 import fs, { type BigIntStats } from 'fs';
 import generate from 'fs-generate';
+import { safeRm } from 'fs-remove-compat';
 import statsSpys from 'fs-stats-spys';
 import normalizeStats from 'normalize-stats';
 import path from 'path';
-import rimraf2 from 'rimraf2';
 import url from 'url';
 
 const __dirname = path.dirname(typeof __filename !== 'undefined' ? __filename : url.fileURLToPath(import.meta.url));
@@ -25,10 +25,10 @@ const isWindows = process.platform === 'win32' || /^(msys|cygwin)$/.test(process
 
 describe('normalize', () => {
   after((done) => {
-    rimraf2(TEST_DIR, { disableGlob: true }, done);
+    safeRm(TEST_DIR, done);
   });
   beforeEach((done) => {
-    rimraf2(TEST_DIR, { disableGlob: true }, () => {
+    safeRm(TEST_DIR, () => {
       generate(TEST_DIR, STRUCTURE, (err) => {
         done(err);
       });

@@ -40,7 +40,7 @@ describe('normalize', () => {
 
     fs.readdir(TEST_DIR, (err, names) => {
       if (err) {
-        done(err.message);
+        done(err);
         return;
       }
 
@@ -82,7 +82,7 @@ describe('normalize', () => {
 
       fs.readdir(TEST_DIR, (err, names) => {
         if (err) {
-          done(err.message);
+          done(err);
           return;
         }
 

@@ -1,6 +1,6 @@
 {
   "name": "normalize-stats",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "Create BigIntStats from fs.Stats for compatibility on earlier versions of Node.js",
   "keywords": [
     "dirent",

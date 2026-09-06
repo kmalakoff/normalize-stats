@@ -21,7 +21,7 @@ const STRUCTURE = {
   'dir3/filelink2': '~dir2/file1',
 };
 
-const isWindows = process.platform === 'win32' || /^(msys|cygwin)$/.test(process.env.OSTYPE);
+const isWindows = process.platform === 'win32' || /^(msys|cygwin)$/.test(process.env.OSTYPE ?? '');
 
 describe('normalize', () => {
   after((done) => {
@@ -39,10 +39,7 @@ describe('normalize', () => {
     const spys = statsSpys();
 
     fs.readdir(TEST_DIR, (err, names) => {
-      if (err) {
-        done(err);
-        return;
-      }
+      if (err) return done(err);
 
       for (const index in names) {
         const smallStats = normalizeStats(fs.statSync(path.join(TEST_DIR, names[index])));
@@ -81,10 +78,7 @@ describe('normalize', () => {
       const spys = statsSpys();
 
       fs.readdir(TEST_DIR, (err, names) => {
-        if (err) {
-          done(err);
-          return;
-        }
+        if (err) return done(err);
 
         for (const index in names) {
           const bigStats_ = fs.lstatSync(path.join(TEST_DIR, names[index]), { bigint: true });

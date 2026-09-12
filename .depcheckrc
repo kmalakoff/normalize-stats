@@ -1,1 +1,1 @@
-ignores: ["node-version-use", "ts-dev-stack", "normalize-stats"]
+ignores: ["normalize-stats", "node-version-use", "ts-dev-stack"]

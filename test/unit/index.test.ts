@@ -73,7 +73,7 @@ describe('normalize', () => {
     });
   });
 
-  ['undefined', 'function'].indexOf(typeof BigInt) >= 0 ||
+  typeof fs.lstatSync(__dirname, { bigint: true }).dev !== 'bigint' ||
     it('should initialize from with bigInt option', (done) => {
       const spys = statsSpys();
 
